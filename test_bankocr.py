@@ -14,5 +14,8 @@ class TestBankOCR(unittest.TestCase):
     def test_take_4_lines(self):
         self.assertEqual(len(list(bankocr.take_lines(4, 'test.txt'))), 4)
 
+    def test_char(self):
+        self.assertEqual(list(list(bankocr.take_char(3, ['foobar']))[0]), ['f', 'o', 'o'])
+
 if __name__ == '__main__':
     unittest.main()

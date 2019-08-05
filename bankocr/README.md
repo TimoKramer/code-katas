@@ -8,5 +8,6 @@ python test_bankocr.py
 ```
 ## Run
 ```
-python bankocr.py
+python bankocr.py test.txt
+python bankocr.py test2.txt
 ```

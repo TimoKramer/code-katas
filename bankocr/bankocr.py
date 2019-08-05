@@ -3,27 +3,33 @@
 import sys
 
 
+class ParsingError(Exception):
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
+
 def parse(char):
     char_code = ''.join(char)
     switcher = {
-            ' _ | ||_|': 0,
-            '     |  |': 1,
-            ' _  _||_ ': 2,
-            ' _  _| _|': 3,
-            '   |_|  |': 4,
-            ' _ |_  _|': 5,
-            ' _ |_ |_|': 6,
-            ' _   |  |': 7,
-            ' _ |_||_|': 8,
-            ' _ |_| _|': 9
+            ' _ | ||_|': '0',
+            '     |  |': '1',
+            ' _  _||_ ': '2',
+            ' _  _| _|': '3',
+            '   |_|  |': '4',
+            ' _ |_  _|': '5',
+            ' _ |_ |_|': '6',
+            ' _   |  |': '7',
+            ' _ |_||_|': '8',
+            ' _ |_| _|': '9'
             }
-    return switcher.get(char_code, None)
+    return switcher.get(char_code)
 
 
 def loop(matrix):
     lines_of_chars = []
     for line_block in range(0, len(matrix), 3):
-        chars = []
+        chars = ''
         for char_block in range(0, len(matrix[0]), 3):
             char = []
             char.append(matrix[line_block][char_block])
@@ -35,7 +41,7 @@ def loop(matrix):
             char.append(matrix[line_block + 2][char_block])
             char.append(matrix[line_block + 2][char_block + 1])
             char.append(matrix[line_block + 2][char_block + 2])
-            chars.append(parse(char))
+            chars = chars + parse(char)
         lines_of_chars.append(chars)
     return lines_of_chars
 
@@ -48,8 +54,13 @@ def char_recon(filename):
     return loop(matrix)
 
 
+def print_result(result):
+    for i in result:
+        print(i)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        print(char_recon(sys.argv[1]))
+        print_result(char_recon(sys.argv[1]))
     else:
         print('this script expects the file to read as a string parameter')

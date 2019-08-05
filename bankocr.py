@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import sys
+
+
 def parse(char):
     char_code = ''.join(char)
     switcher = {
@@ -17,14 +20,11 @@ def parse(char):
     return switcher.get(char_code, None)
 
 
-def char_recon(filename):
-    matrix = open(filename).readlines()
-    matrix = [item.rstrip('\n') for item in matrix]
-    chars = []
-    for line_block in range(0, len(matrix), 4):
-        print('line_block ' + str(line_block))
+def loop(matrix):
+    lines_of_chars = []
+    for line_block in range(0, len(matrix), 3):
+        chars = []
         for char_block in range(0, len(matrix[0]), 3):
-            print('char_block ' + str(char_block))
             char = []
             char.append(matrix[line_block][char_block])
             char.append(matrix[line_block][char_block + 1])
@@ -36,7 +36,20 @@ def char_recon(filename):
             char.append(matrix[line_block + 2][char_block + 1])
             char.append(matrix[line_block + 2][char_block + 2])
             chars.append(parse(char))
-            print(chars)
+        lines_of_chars.append(chars)
+    return lines_of_chars
+
+
+def char_recon(filename):
+    with open(filename) as f:
+        matrix = f.readlines()
+    matrix = [item.rstrip('\n') for item in matrix]
+    matrix = [item for item in matrix if item]
+    return loop(matrix)
+
 
 if __name__ == '__main__':
-    char_recon('test.txt')
+    if len(sys.argv) == 2:
+        print(char_recon(sys.argv[1]))
+    else:
+        print('this script expects the file to read as a string parameter')

@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
 
 import unittest
-import itertools
 
 import bankocr
 
 
 class TestBankOCR(unittest.TestCase):
 
-    def test_take_lines(self):
-        with open('test.txt') as f:
-            self.assertIsInstance(bankocr.take_lines(f), itertools.islice)
-            self.assertEquals(list(bankocr.take_lines(f))[1], '  | _| _||_||_ |_   ||_||_|\n')
+    def test_parse(self):
+        self.assertIs(bankocr.parse([' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', '|']), 1)
+        self.assertIs(bankocr.parse([' ', '_', ' ', '|', ' ', '|', '|', '_', '|']), 0)
 
-    def test_char(self):
-        self.assertEqual(list(list(bankocr.take_char(['foobar']))[0]), ['f', 'o', 'o'])
-        self.assertEqual(list(list(bankocr.take_char(['foobar']))[0]), ['f', 'o', 'o'])
+    def test_loop(self):
+        test_list = ['    _  _     _  _  _  _  _ ',
+                     '  | _| _||_||_ |_   ||_||_|',
+                     '  ||_  _|  | _||_|  ||_| _|']
+        self.assertEqual(bankocr.loop(test_list), [[1, 2, 3, 4, 5, 6, 7, 8, 9]])
 
-    def test_parse_char(self):
-        self.assertIsNot(bankocr.parse_char('     |  |'), 2)
-        self.assertIsNone(bankocr.parse_char('        |'), 2)
-        self.assertIs(bankocr.parse_char(' _  _||_ '), 2)
+    def test_char_recon(self):
+        self.assertEqual(bankocr.char_recon('test.txt'), [[1, 2, 3, 4, 5, 6, 7, 8, 9], [4, 9, 0, 0, 6, 7, 7, 1, 5]])
+
 
 if __name__ == '__main__':
     unittest.main()

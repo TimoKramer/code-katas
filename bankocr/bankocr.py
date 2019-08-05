@@ -23,7 +23,7 @@ def parse(char):
             ' _ |_||_|': '8',
             ' _ |_| _|': '9'
             }
-    return switcher.get(char_code)
+    return switcher[char_code]
 
 
 def loop(matrix):
@@ -41,7 +41,11 @@ def loop(matrix):
             char.append(matrix[line_block + 2][char_block])
             char.append(matrix[line_block + 2][char_block + 1])
             char.append(matrix[line_block + 2][char_block + 2])
-            chars = chars + parse(char)
+            try:
+                chars = chars + parse(char)
+            except KeyError:
+                chars = 'Fehlerhafte Zeile'
+                break
         lines_of_chars.append(chars)
     return lines_of_chars
 

@@ -3,6 +3,7 @@
 import unittest
 import cal
 
+
 class TestCal(unittest.TestCase):
 
     def setUp(self):
@@ -10,6 +11,11 @@ class TestCal(unittest.TestCase):
 
     def test_cal(self):
         self.assertEqual(cal.cal(2, 2014, 6), self.test_string)
+
+    def test_pars_input(self):
+        self.assertEqual(cal.parse_input('2', '2014'), (2, 2014))
+        self.assertRaises(ValueError, cal.parse_input, 'foo', 'bar')
+
 
 if __name__ == '__main__':
     unittest.main()

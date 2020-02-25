@@ -11,6 +11,7 @@ class Lift():
         return "ok", self.current_floor
 
     def collect_at_floor(self, floor):
+        self.queue = [f for f in self.queue if f != floor]
         return "ok", self.current_floor
 
     def call_lift(self, source_floor, direction):

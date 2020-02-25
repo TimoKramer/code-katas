@@ -6,11 +6,13 @@ class Lift():
         self.current_direction = None
         self.queue = []
 
-    def deliver_to_floor(self, floor):
-        self.current_floor = floor
+    def departing_to_floor(self, floor):
+        self.current_direction = "up" if self.current_floor < floor else "down"
         return "ok", self.current_floor
 
-    def collect_at_floor(self, floor):
+    def arriving_at_floor(self, floor):
+        self.current_floor = floor
+        self.current_direction = None
         self.queue = [f for f in self.queue if f != floor]
         return "ok", self.current_floor
 

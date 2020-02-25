@@ -1,13 +1,18 @@
 class Lift():
 
-    def __init__(self, current_floor):
+
+    def __init__(self, current_floor, current_direction):
         self.current_floor = current_floor
+        self.current_direction = current_direction
 
     def get_current_floor(self):
         return self.current_floor
 
     def deliver_to_floor(self, floor):
         self.current_floor = floor
+        return "ok", self.current_floor
+
+    def collect_at_floor(self, floor):
         return "ok", self.current_floor
 
     def call_lift(self, source_floor, direction):

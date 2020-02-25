@@ -7,6 +7,7 @@ class Lift():
         return self.current_floor
 
     def deliver_to_floor(self, floor):
+        self.current_floor = floor
         return "ok", self.current_floor
 
     def call_lift(self, source_floor, direction):
